@@ -1,6 +1,6 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import postsRouter from "./postsRouter.js";
+import postRouter from "./PostRouter.js";
 
 const PORT = 5000;
 const DB_URL = 'mongodb+srv://user:user@cluster0.alnua.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
@@ -8,11 +8,11 @@ const DB_URL = 'mongodb+srv://user:user@cluster0.alnua.mongodb.net/myFirstDataba
 const app = express();
 
 app.use(express.json());
-app.use('/api', postsRouter)
+app.use('/api', postRouter)
 
 async function startApp() {
   try {
-    await mongoose.connect(DB_URL, {useNewUrlParser: true, useUnifiedTopology: true})
+    await mongoose.connect(DB_URL, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false})
     app.listen(PORT, () => {
       console.log('Server started on Port =' + PORT)
     })
@@ -21,5 +21,6 @@ async function startApp() {
   }
 }
 
-startApp()
+startApp().then(() => {
+})
 
