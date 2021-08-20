@@ -1,8 +1,10 @@
-import Post from "./Post.js";
+import Post from './Post.js';
+import FileService from './FileService.js';
 
 class PostService {
-  async create(post) {
-    const newPost = await Post.create(post)
+  async create(post, picture) {
+    const fileName = FileService.saveFile(picture)
+    const newPost = await Post.create({...post, picture: fileName})
     return newPost
   }
 
